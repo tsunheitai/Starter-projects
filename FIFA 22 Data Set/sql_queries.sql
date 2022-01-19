@@ -62,8 +62,6 @@ WHERE AttackingWorkRate = 'Low' AND DefensiveWorkRate = 'Low'
 ORDER BY Overall DESC
 LIMIT 10 
 
--- I'm having a good chuckle as a Chelsea fan, as Man United's GOAT Anthony Martial has the highest overall rating and has low attacking and defensive work rates
-
 -- What about the hardest working players?
 
 SELECT FullName, Overall, Positions, Club   
@@ -100,12 +98,12 @@ WHERE teams.League = 'English Premier League (1)'
 
 SELECT *,
 (SELECT AVG(Overall) 
-						FROM teams
-						WHERE League = 'English Premier League (1)') AS league_average_rating
+FROM teams
+WHERE League = 'English Premier League (1)') AS league_average_rating
 FROM epl
 WHERE player_rating > (SELECT AVG(Overall) 
-						FROM teams
-						WHERE League = 'English Premier League (1)') 
+		       FROM teams
+		       WHERE League = 'English Premier League (1)') 
 
 
 
