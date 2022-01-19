@@ -1,7 +1,5 @@
 --------------------------------------------------------------
--- Used BigQuery to run my SQL code
-
--- Running few queries from the players table
+-- Running few queries from the players and teams table
 --------------------------------------------------------------
 
 -- The top 10 players in FIFA 22 that have the highest growth
@@ -89,6 +87,25 @@ SELECT FullName, Positions, Club, Strength
 FROM players 
 ORDER BY Strength DESC
 LIMIT 10
+
+-- Finding the players in the English Premier League, where the player rating is higher than the average team rating in the English Premier League
+
+WITH epl AS (
+SELECT players.FullName, players.Overall AS player_rating, players.Club
+FROM players
+INNER JOIN teams
+ON players.Club = teams.Name
+WHERE teams.League = 'English Premier League (1)'
+)
+
+SELECT *,
+(SELECT AVG(Overall) 
+						FROM teams
+						WHERE League = 'English Premier League (1)') AS league_average_rating
+FROM epl
+WHERE player_rating > (SELECT AVG(Overall) 
+						FROM teams
+						WHERE League = 'English Premier League (1)') 
 
 
 
